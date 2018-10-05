@@ -11,6 +11,12 @@ MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
 
 WEEKDAYS = {'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'}
 
+def get_input(input_print, iterable_col):
+    res = input(input_print).lower()
+    while res not in iterable_col:
+        res = input(input_print).lower()
+    return res
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -21,19 +27,13 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = input("Please input the city name('chicago', 'new york city', or 'washington') to analyze:").lower()
-    while city not in CITY_DATA:
-        city = input("Please input the city name('chicago', 'new york city', or 'washington') to analyze:").lower()
+    city = get_input("Please input the city name('chicago', 'new york city', or 'washington') to analyze:", CITY_DATA)
 
     # get user input for month (all, january, february, ... , june)
-    month = input("Please input the month(all, january, february, march, ...) you want to filter by:").lower()
-    while (month != 'all') and (month not in MONTHS):
-        month = input("Please input the month you want to filter by:").lower()
+    month = get_input("Please input the month(all, january, february, march, ...) you want to filter by:", ['all'] + MONTHS)
 
     # get user input for day of week (all, monday, tuesday, ... sunday)
-    day = input("Please input the week day(all, monday, tuesday, ...) you want to filter by:").lower()
-    while (day != 'all') and (day not in WEEKDAYS):
-        day = input("Please input the week day you want to filter by:").lower()
+    day = get_input("Please input the week day(all, monday, tuesday, ...) you want to filter by:", WEEKDAYS.union({'all'}))
 
     print('-'*40)
     return city, month, day
